@@ -1,5 +1,5 @@
 ---
-- host: webserver
+- hosts: webserver
   remote-user: osboxes
   become: yes
   become_method: sudo 
