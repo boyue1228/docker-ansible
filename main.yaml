@@ -1,0 +1,26 @@
+---
+- host: webserver
+  remote-user: osboxes
+  become: yes
+  become_method: sudo 
+  task: 
+    - name: Install pip
+      apt: name=python-pip state=present
+
+    - name: Install docker-py package
+      pip: name=docker-py
+
+    - name: Build Docker image from Dockerfile
+      docker_images:
+        name: web
+        path: docker
+        state: build
+        
+    - name: Running the container
+      docker_container:
+        image: web:3.11.5
+        path: docker
+        state: running
+
+    - name: Check if container is running
+      shell: docker ps   
